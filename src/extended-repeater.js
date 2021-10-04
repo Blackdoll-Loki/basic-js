@@ -16,14 +16,32 @@ import { NotImplementedError } from '../extensions/index.js';
  *
  */
 export default function repeater( str, options ) {
-  let strToStr = str + '';
+  let separator = options.separator || '+';
+  let additionSeparator = options.additionSeparator || '|';
+  str = str + '';
+  let addition = options.addition + '';
   let resultString;
-  let separator = '+';
-  let repeaterToNum = options.repeater;
-  for(repeaterToNum; repeaterToNum > 1; repeaterToNum--){
-      resultString += strToStr + separator;
-      repeaterToNum--;
+  let repArr = [];
+  let addStrArr = [];
+  let additionRepeatTimes = options.additionRepeatTimes || 1;
+  let repeatTimes  = options.repeatTimes || 1;
+  while(addition !== "undefined" && additionRepeatTimes > 0){
+    addStrArr.push(addition);
+    if(additionRepeatTimes > 1){
+      addStrArr.push(additionSeparator);
+    }
+    additionRepeatTimes--;
   }
+  let additionRepeated = addStrArr.join('');
+  str = str + additionRepeated;
+  while(repeatTimes > 0){
+    repArr.push(str);
+    if(repeatTimes > 1){
+      repArr.push(separator);
+    }
+    repeatTimes--;
+  }
+  resultString = repArr.join('');
   return resultString;
   // remove line with error and write your code here
 }
